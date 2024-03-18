@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "Themes/App.css",
+    "inputFile": "Themes/App.scss"
+  },
+  {
+    "outputFile": "Themes/dark-base.css",
+    "inputFile": "Themes/dark-base.scss"
+  }
+]

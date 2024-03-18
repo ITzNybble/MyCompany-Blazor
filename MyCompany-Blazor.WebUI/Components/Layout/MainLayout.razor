@@ -1,0 +1,17 @@
+﻿@inherits LayoutComponentBase
+
+<RadzenLayout>
+    <RadzenHeader>
+        <RadzenStack class="rz-shadow-10" Style="background-image: linear-gradient(to right,rgba(0,0,0,.4), rgba(255,255,255,1));" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+                <RadzenImage Path="images/logo/Logo-Boeing.png" Style="height: 50px; padding-left:10px;" />
+        </RadzenStack>
+    </RadzenHeader>
+    <RadzenSidebar Style="width:fit-content;">
+        <RadzenPanelMenu>
+            <RadzenPanelMenuItem Text="Employees" Icon="group" Style="background-color:dimgray" />
+        </RadzenPanelMenu>
+    </RadzenSidebar>
+    <RadzenBody>
+        @Body
+    </RadzenBody>
+</RadzenLayout>

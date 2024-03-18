@@ -1,0 +1,211 @@
+﻿@page "/"
+
+@rendermode InteractiveServer
+
+@inject IDataService DataService
+
+<div class="container-fluid">
+    <div class="row" style="padding-bottom: 20px;">
+        <div class="col-md-6">
+            <RadzenDropDown class="rz-shadow-10 rz-border-radius-2" TValue="Director" Change="@(args => OnDirectorChanged(args))" Data=@Directors AllowClear=true Placeholder="Filter By Director" Style="width: 100%; max-width: 400px;" Name="DropDownClear">
+                <Template>
+                    @($"{(context as Director).FirstName},{(context as Director).LastName}")
+                </Template>
+                <ValueTemplate>
+                    @($"{(context as Director).FirstName},{(context as Director).LastName}")
+                </ValueTemplate>
+            </RadzenDropDown>
+        </div>
+        <div class="col-md-6">
+            <RadzenSelectBar class="rz-shadow-10 rz-border-radius-2" Style="background-color:white;" @bind-Value="@Density" TextProperty="Text" ValueProperty="Value"
+                             Data="@(Enum.GetValues(typeof(Density)).Cast<Density>().Select(t => new { Text = $"{t}", Value = t }))" Size="ButtonSize.Small" />
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <RadzenDataGrid @ref="grid" class="rz-shadow-10 rz-border-radius-2" GroupPanelText="" style="--rz-grid-cell-font-size: 11px; width:100" Density=@Density Data="@FilteredEmployeeList" @bind-Value="@SelectedEmployees" RowHeight="20px"
+                            TItem="AggregateEmployeeData" AllowPaging="true" Row PageSize="20" AllowSorting="true" AllowColumnResize="true" AllowColumnReorder="true" AllowGrouping="true">
+                <HeaderTemplate>
+                    <div style="text-align: center;">
+                        <h5><b> To group by a column, drag and drop a column header here</b></h5>
+                    </div>
+                </HeaderTemplate>
+                <GroupHeaderTemplate>
+                    <u><b>@(context.Data.Key ?? ""), Group items count: @context.Data.Count)</b></u>
+                </GroupHeaderTemplate>
+                <Columns>
+                    <RadzenDataGridColumn TItem="AggregateEmployeeData" Property="FirstName" Title="First Name" Sortable="true" MinWidth="50px" Width="115px" />
+                    <RadzenDataGridColumn TItem="AggregateEmployeeData" Property="LastName" Title="Last Name" Sortable="true" MinWidth="50px" Width="100px" />
+                    <RadzenDataGridColumn TItem="AggregateEmployeeData" Property="Address" Title="Address" Sortable="true" MinWidth="175px" Width="175" />
+                    <RadzenDataGridColumn TItem="AggregateEmployeeData" Property="City" Title="City" Sortable="true" MinWidth="50px" Width="115px;" />
+                    <RadzenDataGridColumn TItem="AggregateEmployeeData" Property="State" Title="State" Sortable="true" MinWidth="50px" Width="75px" />
+                    <RadzenDataGridColumn TItem="AggregateEmployeeData" Property="Country" Title="Country" Sortable="true" MinWidth="50px" Width="100px" />
+                    <RadzenDataGridColumn TItem="AggregateEmployeeData" Property="Title" Title="Title" Sortable="true" MinWidth="50px" />
+                    <RadzenDataGridColumn TItem="AggregateEmployeeData" Property="Department" Title="Department" Sortable="true" MinWidth="50px" />
+                    <RadzenDataGridColumn TItem="AggregateEmployeeData" Property="ManagerFirstName" Title="Manager First Name" Sortable="true" MinWidth="50px" />
+                    <RadzenDataGridColumn TItem="AggregateEmployeeData" Property="ManagerLastName" Title="Manager Last Name" Sortable="true" MinWidth="50px" />
+                    <RadzenDataGridColumn TItem="AggregateEmployeeData" Property="DirectorId" Title="" Visible="false" />
+                </Columns>
+            </RadzenDataGrid>
+        </div>
+        <div class="col-md-2 d-flex justify-content-evenly">
+            <RadzenCard class="rz-shadow-10 rz-border-radius-2" Style="width:187px;">
+            <div class="row d-flex">
+                <div class="col-md-12">
+                    <RadzenImage Style="height:100px;" Path=@($"images/employees/{SelectedEmployees.FirstOrDefault()?.EmployeePictureId}.jpg") />
+                </div>
+            </div>
+            <div class="row" style="padding-top: 10px;">
+                <div class="col-md-12">
+                    <h2><u><b>@SelectedEmployees.FirstOrDefault()?.FirstName @SelectedEmployees.FirstOrDefault()?.LastName</b></u></h2>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 10px;">
+                <div style="width: 110px">
+                    <RadzenLabel Text="Address:" Style="font-weight:bold;" />
+                </div>
+                <div class="col-md-auto">
+                    <RadzenLabel>
+                        @SelectedEmployees.FirstOrDefault()?.Address<br />@SelectedEmployees.FirstOrDefault()?.City, @SelectedEmployees.FirstOrDefault()?.State @SelectedEmployees.FirstOrDefault()?.Country
+                    </RadzenLabel>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 10px;">
+                <div style="width: 110px">
+                    <RadzenLabel Text="Title:" Style="font-weight:bold;" />
+                </div>
+                <div class="col-md-auto">
+                    <RadzenLabel Text=@($"{SelectedEmployees.FirstOrDefault()?.Title}") />
+                </div>
+            </div>
+            <div class="row" style="padding-top: 10px;">
+                <div style="width: 110px">
+                    <RadzenLabel Text="Department:" Style="font-weight:bold;" />
+                </div>
+                <div class="col-md-auto">
+                    <RadzenLabel Text=@($"{SelectedEmployees.FirstOrDefault()?.Department}") />
+                </div>
+            </div>
+            <div class="row" style="padding-top: 10px;">
+                <div style="width: 110px">
+                    <RadzenLabel Text="Manager:" Style="font-weight:bold;" />
+                </div>
+                <div class="col-md-auto">
+                    <RadzenLabel Text=@($"{SelectedEmployees.FirstOrDefault()?.ManagerFirstName} {SelectedEmployees.FirstOrDefault()?.ManagerLastName}") />
+                </div>
+            </div>
+            <div class="row" style="padding-top: 10px;">
+                <div style="width: 110px">
+                    <RadzenLabel Text="Director:" Style="font-weight:bold;" />
+                </div>
+                <div class="col-md-auto" data-flex>
+                    <RadzenLabel Text=@($"{Directors.FirstOrDefault(x => x.Id == SelectedEmployees.FirstOrDefault()?.DirectorId)?.FirstName} {Directors.FirstOrDefault(x => x.Id == SelectedEmployees.FirstOrDefault()?.DirectorId)?.LastName}") />
+                </div>
+            </div>
+            </RadzenCard>
+        </div>
+    </div>
+</div>
+
+@code {
+    RadzenDataGrid<AggregateEmployeeData> grid;
+    
+    IList<AggregateEmployeeData> SelectedEmployees { get; set; }
+
+    List<AggregateEmployeeData> EmployeeList = new();
+    List<AggregateEmployeeData> FilteredEmployeeList = new();
+    List<Director> Directors = new();
+    
+
+    int employeePictureId = 1;
+
+    Director director = new();
+    Density Density = Density.Compact;
+
+    /// <summary>
+    /// Handles any logic that needs to be executed when the component is initialized
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAggregateEmployeeData();
+
+        await GetDirectors();
+
+        SelectedEmployees = new List<AggregateEmployeeData>() { FilteredEmployeeList.FirstOrDefault() };
+    }
+
+    /// <summary>
+    /// Gets the Employee Data necessary for the RadzenDataGrid
+    /// </summary>
+    /// <returns>A List of AggregateEmployeeData Objects</returns>
+    public async Task GetAggregateEmployeeData()
+    {
+        EmployeeList = await DataService.GetAggregateEmployeeData();
+        FilteredEmployeeList = EmployeeList;
+    }
+
+    /// <summary>
+    /// Gets list of Directors
+    /// </summary>
+    /// <returns>List of Director Objects</returns>
+    public async Task GetDirectors()
+    {
+        Directors = await DataService.GetDirectors();
+    }
+
+    /// <summary>
+    /// For Demo purposes, randomly selects an employee image id
+    /// </summary>
+    public void GetEmployeeImage()
+    {
+        Random rand = new();
+
+        employeePictureId = rand.Next(1, 21);
+    }
+
+    /// <summary>
+    /// Handles the OnChange event of the RadzenDropDown control.
+    /// </summary>
+    /// <param name="selectedDirector">The selected Director Object</param>
+    public void OnDirectorChanged(object selectedDirector)
+    {
+        if (selectedDirector is Director)
+        {
+            director = selectedDirector as Director;
+        }
+        else
+        {
+            director = null;
+        }
+
+        if (director?.Id > 0)
+        {
+            FilteredEmployeeList = EmployeeList.Where(e => e.DirectorId == director.Id).ToList();
+        }
+        else
+        {
+            FilteredEmployeeList = EmployeeList;
+        }
+
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Handles logic for first Render of the component
+    /// </summary>
+    /// <param name="firstRender"></param>
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            grid.ExpandRow(FilteredEmployeeList.FirstOrDefault());
+            StateHasChanged();
+        }
+
+        base.OnAfterRender(firstRender);
+    }
+}

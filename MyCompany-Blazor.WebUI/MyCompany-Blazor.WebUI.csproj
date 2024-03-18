@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>MyCompany-Blazor.WebUI</RootNamespace>
+    <AssemblyName>$(AssemblyName.Replace(' ', '_'))</AssemblyName>
+    <Platforms>AnyCPU;x86</Platforms>
+  </PropertyGroup>
+
+	<!-- Custom property group added to add the environment name during publish    
+     The EnvironmentName property is used during the publish
+     for the environment variable in web.config
+-->
+	<PropertyGroup Condition=" '$(Configuration)' == '' Or '$(Configuration)' == 'Debug'">
+		<EnvironmentName>Development</EnvironmentName>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)' != '' AND '$(Configuration)' != 'Debug' ">
+		<EnvironmentName>Production</EnvironmentName>
+	</PropertyGroup>
+
+
+	<ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
+    <None Include="wwwroot\images\employees\1.jpg" />
+    <None Include="wwwroot\images\employees\10.jpg" />
+    <None Include="wwwroot\images\employees\11.jpg" />
+    <None Include="wwwroot\images\employees\12.jpg" />
+    <None Include="wwwroot\images\employees\13.jpg" />
+    <None Include="wwwroot\images\employees\14.jpg" />
+    <None Include="wwwroot\images\employees\15.jpg" />
+    <None Include="wwwroot\images\employees\16.jpg" />
+    <None Include="wwwroot\images\employees\17.jpg" />
+    <None Include="wwwroot\images\employees\18.jpg" />
+    <None Include="wwwroot\images\employees\19.jpg" />
+    <None Include="wwwroot\images\employees\2.jpg" />
+    <None Include="wwwroot\images\employees\20.jpg" />
+    <None Include="wwwroot\images\employees\3.jpg" />
+    <None Include="wwwroot\images\employees\4.jpg" />
+    <None Include="wwwroot\images\employees\5.jpg" />
+    <None Include="wwwroot\images\employees\6.jpg" />
+    <None Include="wwwroot\images\employees\7.jpg" />
+    <None Include="wwwroot\images\employees\8.jpg" />
+    <None Include="wwwroot\images\employees\9.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
+    <PackageReference Include="Radzen.Blazor" Version="4.26.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyCompany-Blazor.Server\MyCompany-Blazor.Server.csproj" />
+    <ProjectReference Include="..\MyCompany-Blazor.Shared\MyCompany-Blazor.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
