@@ -1,46 +1,46 @@
 # MyCompany-Blazor
 
-Step 1: Download or clone MyCompany-Blazor Repository
+**Step 1**: Download or clone MyCompany-Blazor Repository
 
 **---Set up the Database----**
 
-Step 2: Download the SQL Scripts Here and unzip them: [SQL scripts.zip](https://github.com/ITzNybble/MyCompany-Blazor/files/14630646/SQL.scripts.zip)
+**Step 2:** Download the SQL Scripts Here and unzip them: [SQL scripts.zip](https://github.com/ITzNybble/MyCompany-Blazor/files/14630646/SQL.scripts.zip)
 
-Step 3: There are two options here:
+**Step 3:** There are two options here:
+
   Option A: Run the SQL file, "00_CreateDatabase_Tables_Populate.sql" against the SQL server instance. This script contains scripts "01" through "05" as one large script. 
-
-**  NOTE: If you use this script there is no need to run the other scripts.**
-
+** NOTE: If you use this script there is no need to run the other scripts.**
+  
   or
 
   Option B: Run each seperate script files starting with "01_CreateDirectorTable.sql" and progression through "05_PopulateTables.sql" in numerical order
 
 **---Publish solution files---**
 
-Step 4: Launch the solution with Visual Studio
+**Step 4:** Launch the solution with Visual Studio
 
-Step 5: Within the MyCompany-Blazor.WebUI project, Open, appsettings.json
+**Step 5:** Within the MyCompany-Blazor.WebUI project, Open, appsettings.json
 ![image](https://github.com/ITzNybble/MyCompany-Blazor/assets/14057570/be96046c-6976-49b1-a04a-0a8ec8d2cc79)
 
-Step 6: Update DefaultConnection string to point to the newly created MyCompany database
+**Step 6:** Update DefaultConnection string to point to the newly created MyCompany database
 **NOTE: Verify a login is being used that has access to the SQL Server instance**
 ![image](https://github.com/ITzNybble/MyCompany-Blazor/assets/14057570/0ccdd34f-fc29-4276-8b88-5a0331d89a6c)
 
-Step 7: Right click on the "MyCompany-Blazor.WebUI and click, "Publish..."
+**Step 7:** Right click on the "MyCompany-Blazor.WebUI and click, "Publish..."
 
-Step 8: In the Publish Window, Click, "New Profile"
+**Step 8:** In the Publish Window, Click, "New Profile"
 ![image](https://github.com/ITzNybble/MyCompany-Blazor/assets/14057570/4798c500-35b5-4b59-b61a-24370a09eec5)
 
-Step 9: You will want a Target of Folder for this profile, then click, "Next"
+**Step 9:** You will want a Target of Folder for this profile, then click, "Next"
 ![image](https://github.com/ITzNybble/MyCompany-Blazor/assets/14057570/256319ff-d49e-431e-b276-7936e0fc739a)
 
-Step 10: For this Demo we will use the default folder location, click "Finish"
+**Step 10:** For this Demo we will use the default folder location, click "Finish"
 ![image](https://github.com/ITzNybble/MyCompany-Blazor/assets/14057570/458d7580-bc2e-4e57-a5ea-b3693d65076a)
 
-Step 11: Click, "Show all settings" and verify we are using the Release configuration, Also verify the connection strings are valid for the SQL Server Instance. The single publish profile in the solution has everything needed except the correct connection string. Then click, "Save"
+**Step 11:** Click, "Show all settings" and verify we are using the Release configuration, Also verify the connection strings are valid for the SQL Server Instance. The single publish profile in the solution has everything needed except the correct connection string. Then click, "Save"
 ![image](https://github.com/ITzNybble/MyCompany-Blazor/assets/14057570/8cfbc10c-acd3-4f55-a38e-92fcfa95ba05)
 
-Step 12: Click, "Publish" and remember the folder path.
+**Step 12:** Click, "Publish" and remember the folder path.
 
 ---Configure IIS---
 
@@ -48,24 +48,24 @@ NOTE: IIS will need to have teh AspNetCoreModuleV2, If it is not present in your
 ![image](https://github.com/ITzNybble/MyCompany-Blazor/assets/14057570/4931bb02-ccf5-494a-b3bf-548ca43a53d2)
 
 
-Step 13: Open IIS and Right Click on Sites -> select, "Add Website"
+**Step 13:** Open IIS and Right Click on Sites -> select, "Add Website"
 ![image](https://github.com/ITzNybble/MyCompany-Blazor/assets/14057570/80013a56-6bb7-4b28-8a09-8cd5e2d97226)
 
-Step 14: For the Demo we are fine to use the DefaultAppPool or one of your choice.
+**Step 14:** For the Demo we are fine to use the DefaultAppPool or one of your choice.
 **Note: the ApplicationPool's User needs to have access to the SQL Server Database.**
 
-Step 15: Fill out the website info as in the picture below with the exception of the physical path. Select a physical path where we will put the project files we published in Step 12. (Ideally the path would match our publish path from step 12 but it does not need to). The port can be any port which is available and will work. Click, "OK" when finished
+**Step 15:** Fill out the website info as in the picture below with the exception of the physical path. Select a physical path where we will put the project files we published in Step 12. (Ideally the path would match our publish path from step 12 but it does not need to). The port can be any port which is available and will work. Click, "OK" when finished
 ![image](https://github.com/ITzNybble/MyCompany-Blazor/assets/14057570/2d50db92-8bca-4a8f-81e6-437a5a868e23)
 
-Step 16: Open the Authentication window within the Security Category. Verify Anonymouse Authentication is **Enabled**. If it is not then please enable it.
+**Step 16:** Open the Authentication window within the Security Category. Verify Anonymouse Authentication is **Enabled**. If it is not then please enable it.
 ![image](https://github.com/ITzNybble/MyCompany-Blazor/assets/14057570/bea791f8-f9ec-4bb3-bbc1-cc89ca41a3a6)
 
-Step 17: Copy all files from the folder in Step 12 into the folder we specified in the previous step.
+**Step 17:** Copy all files from the folder in Step 12 into the folder we specified in the previous step.
 
-Step 18: Once files are copied over, we need to start the web site. Select the MyCompanyDemo site within IIS and click, "start" on the right panel under "Manage Website"
+**Step 18:** Once files are copied over, we need to start the web site. Select the MyCompanyDemo site within IIS and click, "start" on the right panel under "Manage Website"
 ![image](https://github.com/ITzNybble/MyCompany-Blazor/assets/14057570/32b9e8f5-be77-4685-bc7c-602f18493cd1)
 
-Step 19: Click Browse and the Demo will launch in a browser window.
+**Step 19:** Click Browse and the Demo will launch in a browser window.
 
 
 
