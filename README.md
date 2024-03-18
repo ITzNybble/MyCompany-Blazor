@@ -4,7 +4,7 @@ Step 1: Download or clone MyCompany-Blazor Repository
 
 **---Set up the Database----**
 
-Step 2: Locate the SQL Scripts folder within the project
+Step 2: Download the SQL Scripts Here and unzip them: [SQL scripts.zip](https://github.com/ITzNybble/MyCompany-Blazor/files/14630646/SQL.scripts.zip)
 
 Step 3: There are two options here:
   Option A: Run the SQL file, "00_CreateDatabase_Tables_Populate.sql" against the SQL server instance. This script contains scripts "01" through "05" as one large script. 
